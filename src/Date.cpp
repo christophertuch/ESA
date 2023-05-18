@@ -2,23 +2,90 @@
 
 Date::Date()
 {
-    m_year = 0;
-    m_month = 0;
-    m_day = 0;
+    m_year = 1900;
+    m_month = 1;
+    m_day = 1;
 }
-
 Date::Date(int year, int month, int day)
 {
     m_year = year;
     m_month = month;
     m_day = day;
+    if (dateValidation(*this) != 0)
+    {
+        std::cerr << "Date is not valid!" << std::endl;
+    }
 }
 
 Date::Date(std::string date)
 {
-    m_year = std::stoi(date.substr(0, 4));  // asssign first 4 characters of string to m_year
-    m_month = std::stoi(date.substr(5, 2)); // asssign 5th and 6th characters of string to m_month
-    m_day = std::stoi(date.substr(8, 2));   // asssign 8th and 9th characters of string to m_day
+    if (date.length() != 10)
+    {
+        std::cerr << "Wrong input format! Please use YYYY-MM-DD" << std::endl;
+    }
+    else
+    {
+        try
+        {
+            m_year = std::stoi(date.substr(0, 4));  // asssign first 4 characters of string to m_year
+            m_month = std::stoi(date.substr(5, 2)); // asssign 5th and 6th characters of string to m_month
+            m_day = std::stoi(date.substr(8, 2));   // asssign 8th and 9th characters of string to m_day
+
+            if (dateValidation(*this) != 0)
+            {
+                std::cerr << "Date is not valid!" << std::endl;
+            }
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+    }
+}
+
+int Date::dateValidation(Date date)
+{
+    if (date.getYear() < 1900 || date.getYear() > date.getCurrentDate().getYear()) // check if year is valid
+    {
+        return 1;
+    }
+    if (date.getMonth() < 1 || date.getMonth() > 12) // check if month is valid
+    {
+        return 2;
+    }
+    if (date.getDay() < 1 || date.getDay() > 31) // check if day is valid
+    {
+        return 3;
+    }
+    if (date.getMonth() == 2) // check if day is valid for february
+    {
+        if (date.getDay() > 28)
+        {
+            std::cout << "Check if Year had a 29th February!" << std::endl;
+            std::cout << "If not, please type n!" << std::endl;
+            std::cout << "If yes, please type y!" << std::endl;
+            std::string input;
+            std::cin >> input;
+            if (input == "y")
+            {
+                m_day = 29;
+                return 0;
+            }
+            else
+            {
+                std::cerr << "Date is not valid!" << std::endl;
+                return 4;
+            }
+        }
+    }
+    if (date.getMonth() == 4 || date.getMonth() == 6 || date.getMonth() == 9 || date.getMonth() == 11) // check if day is valid for april, june, september, november
+    {
+        if (date.getDay() > 30)
+        {
+            return 5;
+        }
+    }
+    return 0;
 }
 
 int Date::getYear()
