@@ -34,17 +34,17 @@ Aufgabe:
 
 Das Programm muss folgendes leisten:
 
-Verwaltung von maximal 500 Mitarbeitern
+Verwaltung von maximal 500 Mitarbeitern // DONE
 
-Anlegen und Löschen eines Mitarbeiters
+Anlegen und Löschen eines Mitarbeiters // DONE
 
-Eingabe der Tage, wenn der Mitarbeiter Urlaub nehmen möchte (muss mehrfach möglich sein)
+Eingabe der Tage, wenn der Mitarbeiter Urlaub nehmen möchte (muss mehrfach möglich sein) // DONE
 
-Suche eines Mitarbeiters mit Ausgabe seiner Daten und wie viel Resturlaub er noch hat
+Suche eines Mitarbeiters mit Ausgabe seiner Daten und wie viel Resturlaub er noch hat // DONE
 
-Auflistung aller gespeicherten Mitarbeiterdaten
+Auflistung aller gespeicherten Mitarbeiterdaten // DONE
 
-Dokumentieren Sie Ihr Programm durch Kommentare im Quelltext.
+Dokumentieren Sie Ihr Programm durch Kommentare im Quelltext. // TODO
 
 Bewertungshinweise:
 

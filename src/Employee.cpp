@@ -7,8 +7,35 @@ Employee::Employee(std::string name, std::string prename, std::string birthday, 
     Date b_temp(birthday);
     m_birthday = b_temp;
     m_disability = disability;
-    m_vacationDaysTaken = vacationDaysTaken;
     m_vacationDays = Employee::calculateVacationDays(this);
+    if (vacationDaysTaken > m_vacationDays)
+    {
+        std::cout << "You can't take more vacation days than you have. Assuming all have been taken." << std::endl;
+        m_vacationDaysTaken = m_vacationDays;
+    }
+    else
+    {
+        m_vacationDaysTaken = vacationDaysTaken;
+    }
+    m_vacationDays = Employee::calculateVacationDays(this);
+    m_id = Employee::generateId();
+}
+
+int Employee::generateId()
+{
+    static int id = 1;
+    return id++;
+}
+
+void Employee::printEmployee()
+{
+    std::cout << "ID: " << this->m_id << ", ";
+    std::cout << "Name: " << this->getName() << ", ";
+    std::cout << "Prename: " << this->getPrename() << ", ";
+    std::cout << "Birthday: " << this->getBirthday().toString() << ", ";
+    std::cout << "Disability: " << this->getDisability() << ", ";
+    std::cout << "Vacation days taken: " << this->getVacationDaysTaken() << ", ";
+    std::cout << "Vacation days left: " << this->getVacationDays() << std::endl;
 }
 
 std::string Employee::getName()
@@ -51,10 +78,16 @@ void Employee::setVacationDays(int days)
     m_vacationDays = days;
 }
 
+void Employee::takeVacation(int days)
+{
+    m_vacationDaysTaken = m_vacationDaysTaken + days;
+    m_vacationDays = m_vacationDays - days;
+}
+
 int Employee::calculateVacationDays(Employee *employee)
 {
     int vacationDays = 30;
-    int age = employee->getBirthday().getYear() - Date::getCurrentDate().getYear();
+    int age = employee->getBirthday().getAge();
     if (age > 50)
     {
         vacationDays = vacationDays + 2;
