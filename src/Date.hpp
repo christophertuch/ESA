@@ -25,6 +25,9 @@ public:
     /// @brief validate date
     int dateValidation(Date date);
 
+    /// @brief check if year is a leap year
+    bool isLeapYear(int year);
+
     /// @brief get member variable m_year
     /// @return m_year
     int getYear();

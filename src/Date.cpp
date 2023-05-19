@@ -8,37 +8,48 @@ Date::Date()
 }
 Date::Date(int year, int month, int day)
 {
-    m_year = year;
-    m_month = month;
-    m_day = day;
-    if (dateValidation(*this) != 0)
+    try
     {
-        std::cerr << "Date is not valid!" << std::endl;
+        m_year = year;
+        m_month = month;
+        m_day = day;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+        while (dateValidation(*this) != 0)
+        {
+            std::cout << "Please enter a valid date in the format YYYY-MM-DD" << std::endl;
+            std::string date;
+            std::cin >> date;
+            Date *validationDate = new Date(date);
+            m_year = validationDate->getYear();
+            m_month = validationDate->getMonth();
+            m_day = validationDate->getDay();
+        }
     }
 }
 
 Date::Date(std::string date)
 {
-    if (date.length() != 10)
+    try
     {
-        std::cerr << "Wrong input format! Please use YYYY-MM-DD" << std::endl;
+        m_year = std::stoi(date.substr(0, 4));
+        m_month = std::stoi(date.substr(5, 2));
+        m_day = std::stoi(date.substr(8, 2));
     }
-    else
+    catch (const std::exception &e)
     {
-        try
-        {
-            m_year = std::stoi(date.substr(0, 4));  // asssign first 4 characters of string to m_year
-            m_month = std::stoi(date.substr(5, 2)); // asssign 5th and 6th characters of string to m_month
-            m_day = std::stoi(date.substr(8, 2));   // asssign 8th and 9th characters of string to m_day
 
-            if (dateValidation(*this) != 0)
-            {
-                std::cerr << "Date is not valid!" << std::endl;
-            }
-        }
-        catch (const std::exception &e)
+        while (dateValidation(*this) != 0)
         {
-            std::cerr << e.what() << '\n';
+            std::cerr << "Please enter a valid date in the format YYYY-MM-DD" << '\n';
+            std::string date;
+            std::cin >> date;
+            Date *validationDate = new Date(date);
+            m_year = validationDate->getYear();
+            m_month = validationDate->getMonth();
+            m_day = validationDate->getDay();
         }
     }
 }
@@ -61,14 +72,8 @@ int Date::dateValidation(Date date)
     {
         if (date.getDay() > 28)
         {
-            std::cout << "Check if Year had a 29th February!" << std::endl;
-            std::cout << "If not, please type n!" << std::endl;
-            std::cout << "If yes, please type y!" << std::endl;
-            std::string input;
-            std::cin >> input;
-            if (input == "y")
+            if (isLeapYear(date.getYear()))
             {
-                m_day = 29;
                 return 0;
             }
             else
@@ -86,6 +91,18 @@ int Date::dateValidation(Date date)
         }
     }
     return 0;
+}
+
+bool Date::isLeapYear(int year)
+{
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 4 == 0 && year % 400 == 0))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 int Date::getYear()

@@ -4,17 +4,8 @@ Employee::Employee(std::string name, std::string prename, std::string birthday, 
 {
     m_name = name;
     m_prename = prename;
-    Date b_temp;
-    try
-    {
-        Date b_temp(birthday);
-    }
-    catch (...)
-    {
-        std::cout << "Using default birthday: 1970-01-01" << std::endl;
-        Date b_temp("1970-01-01");
-        m_birthday = b_temp;
-    }
+    Date b_temp(birthday);
+    m_birthday = b_temp;
     m_disability = disability;
     m_vacationDays = Employee::calculateVacationDays(this);
     if (vacationDaysTaken > m_vacationDays)
