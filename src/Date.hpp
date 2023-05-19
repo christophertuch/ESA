@@ -10,7 +10,6 @@ private:
     int m_day;
 
 public:
-    /// @brief Contructor to create a new empty Date
     Date();
 
     /// @brief Contructor to create a new Date
@@ -22,6 +21,12 @@ public:
     /// @brief convert date to string
     /// @return date as string
     std::string toString();
+
+    /// @brief validate date
+    int dateValidation(Date date);
+
+    /// @brief check if year is a leap year
+    bool isLeapYear(int year);
 
     /// @brief get member variable m_year
     /// @return m_year
